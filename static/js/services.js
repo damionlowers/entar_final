@@ -359,7 +359,7 @@ interactApp.factory('Settings', function ($http, $cookies, $localstorage, Reques
             return Request.getRequest(API + 'reviewers/' + client.slug + '/layout/sidemenu/');
         },
         boxes: function (client) {
-            return Request.getRequest(API + 'reviewers/' + client.slug + '/layout/box/');
+            return Request.getRequest(API + 'reviewers/' + client.slug + '/layout/box/?type=' + client.type);
         },
         save: function (client) {
             return Request.putRequest(API + 'reviewers/' + client.slug + '/?type=' + client.type, client);
