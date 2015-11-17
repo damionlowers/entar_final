@@ -4,6 +4,18 @@ interactApp.controller('SignInCtrl', function ($scope, $q, $ionicLoading, $docum
 
         questionnaireObjs = $localstorage.getObject("toUploadQuestion");
 
+/*
+  questionnaireObjs.filter(function(value){
+        return unique_id===1;
+  });
+
+
+  var submitArr=[];
+  questionnaireObjs.forEach(function (question) {
+        submitArr.push(question.toSubmit);
+  });*/
+
+
         questionnaireObjs.forEach(function (question) {
             QuestionaireRequest.submitJumbo(question.runId, {
                 data: question.toSubmit
@@ -851,10 +863,10 @@ interactApp.controller('TakeQuestionnaireCtrl', function ($scope, $localstorage,
             }
         }
 
-        QuestionaireRequest.submitQuestionnare($stateParams.runId, {
-            data: toSubmit
-        }).then(function (tmp) {
-            var data = tmp;
+        QuestionaireRequest.submitQuestionnare($stateParams.runId, 
+            //{   data: toSubmit}
+            toSubmit).then(function (tmp) {
+            var data = tmp.data;
 
             questionnaireObj.section_id++;
             console.log("questionnaireObj", questionnaireObj);
@@ -924,8 +936,7 @@ interactApp.controller('TakeQuestionnaireCtrl', function ($scope, $localstorage,
 
                 }
             } else {
-                if ('messages' in data) {
-                    if (data.messages[0].text === 'Questionnaire Completed') {
+                if ('messages' in data && data.messages[0].text === 'Questionnaire Completed') {
                         $ionicLoading.hide();
                         var popup = $ionicPopup.alert({
                             title: 'Questionnaire Completed',
@@ -934,16 +945,23 @@ interactApp.controller('TakeQuestionnaireCtrl', function ($scope, $localstorage,
                         popup.then(function () {
                             $state.go('cdashboard.questionnaire');
                         });
-                    }
+    
                 } else {
 
                     $scope.questions = [];
-                    Questionnaires.getNextPage(data.runcode).then(function (data) {
+         
+                    QuestionaireRequest.getNextPage(data.runcode, data.questionsetSortId).then(function (data) {
+                    
                         data.questionset.questions.forEach(function (question) {
                             var res = QuestionStored.getQuestionsetById(question.id);
-                            if (Object.keys(res).length === 0) {
-                                QuestionStored.insertQuestion(question);
-                            } else {
+
+                            try{
+                                if (Object.keys(res).length === 0) {
+                                    QuestionStored.insertQuestion(question);
+                                } else {
+                                    QuestionStored.updateQuestionsetById(question.id, question, obj.id);
+                                }
+                            }catch(e){
                                 QuestionStored.updateQuestionsetById(question.id, question, obj.id);
                             }
                         });

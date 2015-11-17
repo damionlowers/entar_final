@@ -15,7 +15,7 @@
                         <div ng-switch-when="choice">
                             <div class="list">
                                 <label class="item item-radio" ng-repeat="choice in question.choices">
-                                    <input type="radio" data-choice="{{choice}}" name="choices_{{choice}}" ng-model="response[key].choice" ng-value="choice" class="data_choice">
+                                    <input type="radio" data-choice="{{choice}}" name="choices_{{choice.question_id}}" ng-model="response[key].choice" ng-value="choice" class="data_choice">
                                     <div class="item-content">
                                         {{choice.text}}
                                     </div>
@@ -26,7 +26,7 @@
                         <div ng-switch-when="rank">
                             <div class="list">
                                 <label class="item item-radio" ng-repeat="choice in question.choices">
-                                    <input type="radio" name="ranks_{{choice}}" data-choice="{{choice}}" ng-model="response[key].rank" ng-value="choice" class="data_rank">
+                                    <input type="radio" name="ranks_{{choice.question_id}}" data-choice="{{choice}}" ng-model="response[key].rank" ng-value="choice" class="data_rank">
                                     <div class="item-content">
                                         {{choice.text}}
                                     </div>

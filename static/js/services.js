@@ -396,10 +396,14 @@ interactApp.factory('QuestionaireRequest', function ($http, $localstorage, Reque
                 responses: object
             });
         },
-        getNextPage: function (unique_id, object) {
-            return Request.postRequest(API + 'questionnaires/' + unique_id + '/take/results', {
+
+        getNextPage: function (unique_id, sectionId) {
+            console.log("next",sectionId,unique_id);
+        //getNextPage: function (unique_id, object) {
+            return Request.getRequest(API + 'questionnaires/q/' + unique_id + '/'+sectionId+'/');
+           /* return Request.postRequest(API + 'questionnaires/' + unique_id + '/take/results', {
                 responses: object
-            });
+            });*/
         },
         getQuestionnaires: function (company) {
             return Request.getRequest(API + '/' + company + '/questionnaires/');
