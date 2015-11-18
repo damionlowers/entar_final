@@ -1,4 +1,4 @@
-interactApp.factory('Request', function ($resource, $localstorage, $cookies, $http, $q, API) {
+interactApp.factory('Request', function ($resource, $localstorage, $cookies, $http,$window, $q, API) {
 
     /* $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
      $http.defaults.headers.xsrfHeaderName = 'X-CSRFToken';
@@ -19,6 +19,7 @@ interactApp.factory('Request', function ($resource, $localstorage, $cookies, $ht
         },
 
         putRequest: function (url, postdata) {
+
             var promise = $q.defer();
             $http.put(url, postdata, {
                 headers: {
@@ -32,7 +33,24 @@ interactApp.factory('Request', function ($resource, $localstorage, $cookies, $ht
             });
             return promise.promise;
         },
+
         postRequest: function (url, postdata) {
+
+            postdata=encodeURIComponent(JSON.stringify(postdata));
+        
+           /* var promise = $q.defer();
+            window.plugins.CordovaHttpPlugin.post(url, postdata, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                }
+
+            }).success(function (data) {
+                promise.resolve(data);
+            }).error(function (data) {
+                promise.reject(data);
+            });
+            return promise.promise;*/
+
             var promise = $q.defer();
             $http.post(url,
                 postdata, {

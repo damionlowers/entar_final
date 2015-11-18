@@ -90,12 +90,15 @@ interactApp.controller('SignInCtrl', function ($scope, $q, $ionicLoading, $docum
 
         //hard coded please remove 
 
-       /* user = {
-                        username: "deano24",
-                        password: "cookie24"
+       // user = {
+
+  //                      username: "deano24",
+    //                    password: "cookie24"
 //            username: "stanu_yiannamaria",
 //            password: "Test123"
-        };*/
+      //  };
+
+       
 
 
         UserRequest.loginUser(user).then(function (data) {
@@ -145,7 +148,7 @@ interactApp.controller('SignInCtrl', function ($scope, $q, $ionicLoading, $docum
 
 
     if ($localstorage.get('isLoggedIn') === 'true') {
-        $state.go('cdashboard.dashboard');
+        //$state.go('cdashboard.dashboard');
     }
     $scope.clear = function () {
         //$localstorage.set('isLoggedIn', false);
