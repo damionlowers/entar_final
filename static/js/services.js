@@ -74,27 +74,36 @@ interactApp.factory('Request', function ($resource, $localstorage, $cookies, $ht
 
 
 interactApp.service('Questionnaires', function ($q, $http, API, $log, $localstorage, QuestionaireRequest) {
-    var token = $localstorage.getObject("AccessToken");
-    $http.defaults.headers.common['X-CSRFToken'] = $localstorage.get("token");
-    $http.defaults.headers.common['Authorization'] = token.token_type + ' ' + token.access_token;
+    var loadTokens = function () {
+        var token = $localstorage.getObject("AccessToken");
+        $http.defaults.headers.common['X-CSRFToken'] = $localstorage.get("token");
+        $http.defaults.headers.common['Authorization'] = token.token_type + ' ' + token.access_token;
+
+    }
 
 
     this.submit = function (runid, passedData) {
+        loadTokens();
         return QuestionaireRequest.submitQuestionnare(runid, passedData);
     };
     this.submitJumbo = function (unique_id, object) {
+        loadTokens();
         return QuestionaireRequest.submitJumbo(unique_id, object);
     };
     this.getNextPage = function (runid) {
+        loadTokens();
         return QuestionaireRequest.getNextPage(runid);
     };
     this.getData = function (client) {
+        loadTokens();
         return QuestionaireRequest.getQuestions(client);
     };
     this.getQuestionnaires = function (company) {
+        loadTokens();
         return QuestionaireRequest.getQuestionnaires(company);
     };
     this.getQuestionnaire = function (runId) {
+        loadTokens();
         return QuestionaireRequest.getQuestionnaire(runId);
     };
 });
@@ -209,12 +218,17 @@ interactApp.service('Camera', function ($cordovaCamera, $q) {
 
 interactApp.factory('Sessions', function ($http, Request, $window, $ionicHistory, $timeout, $resource, $q, API, $localstorage) {
 
+    var loadTokens = function () {
+        var token = $localstorage.getObject("AccessToken");
+        $http.defaults.headers.common['X-CSRFToken'] = $localstorage.get("token");
+    };
 
     return {
         getToken: function () {
             return Request.getRequest(API + 'accounts/get_csrf_token/');
         },
         getAccessToken: function (user) {
+            loadTokens();
             $http.defaults.headers.common['Authorization'] = 'Bearer tFpx9xzICdy7Y4sV2PcqxF8fKOC62m';
             return Request.postRequest('https://www.enteract.io/o/token/', user);
         },
