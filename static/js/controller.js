@@ -1,4 +1,4 @@
-interactApp.controller('SignInCtrl', function ($scope, $q, $ionicLoading, $document, $localstorage, UserRequest, Sessions, $state) {
+interactApp.controller('SignInCtrl', function ($scope, $q,Request, $ionicLoading, $document, $localstorage, UserRequest, Sessions, $state) {
 
 
 
