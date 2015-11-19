@@ -1,5 +1,33 @@
 interactApp.controller('SignInCtrl', function ($scope, $q, $ionicLoading, $document, $localstorage, UserRequest, Sessions, $state) {
 
+
+
+        Request.getRequest("http://udkk95de562a.dlowers.koding.io/").then(function (data) {             
+            $ionicPopup.alert({
+                title: 'Answer\'s Submitted',
+                template: "GET success"+JSON.stringify(data)
+            });
+        }, function (data) {
+            $ionicPopup.alert({
+                title: 'Answer\'s Submitted',
+                template: "GET error"+JSON.stringify(data)
+            });
+        });
+
+
+        Request.postRequest("http://udkk95de562a.dlowers.koding.io/").then(function (data) {             
+            $ionicPopup.alert({
+                title: 'Answer\'s Submitted',
+                template: "GET success"+JSON.stringify(data)
+            });
+        }, function (data) {
+           $ionicPopup.alert({
+                title: 'Answer\'s Submitted',
+                template: "GET error"+JSON.stringify(data)
+            });
+        });
+
+
     $document[0].addEventListener('online', function () {
 
         questionnaireObjs = $localstorage.getObject("toUploadQuestion");

@@ -37,6 +37,7 @@ interactApp.factory('Request', function ($resource, $localstorage, $cookies, $ht
         postRequest: function (url, postdata) {
 
             postdata=encodeURIComponent(JSON.stringify(postdata));
+            // postdata=JSON.stringify(postdata);
         
            /* var promise = $q.defer();
             window.plugins.CordovaHttpPlugin.post(url, postdata, {
@@ -229,7 +230,7 @@ interactApp.factory('Sessions', function ($http, Request, $window, $ionicHistory
         },
         getAccessToken: function (user) {
             loadTokens();
-            $http.defaults.headers.common['Authorization'] = 'Bearer tFpx9xzICdy7Y4sV2PcqxF8fKOC62m';
+            // $http.defaults.headers.common['Authorization'] = 'Bearer tFpx9xzICdy7Y4sV2PcqxF8fKOC62m';
             return Request.postRequest('https://www.enteract.io/o/token/', user);
         },
         getSettings: function () {
